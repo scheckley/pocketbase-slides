@@ -1,0 +1,42 @@
+/*-- scss:defaults --*/
+
+@import url(https://fonts.googleapis.com/css?family=Montserrat:300,300i&display=swap);
+@import url(https://fonts.googleapis.com/css?family=Josefin+Sans&display=swap);
+@import url(https://fonts.googleapis.com/css?family=Fira+Mono&display=swap);
+
+// fonts
+$font-family-sans-serif: Montserrat, sans-serif !default;
+$font-family-monospace: "Fira Mono", monospace  !default;
+
+// colors
+$body-bg: #16161D !default;
+$body-color: #DCD7BA !default;
+$link-color: #7E9CD9 !default;
+$selection-bg: #727169 !default;
+
+// headings
+$presentation-heading-font: "Josefin Sans", sans-serif !default;
+$presentation-heading-color: #DCD7BA !default;
+
+$h1-font-size: 1.6em !default;
+$h2-font-size: 1.3em !default;
+$h3-font-size: 1.15em !default;
+$h4-font-size: 1em !default;
+
+// code blocks
+$code-block-border-color: #93a1a1 !default;
+$code-color: $presentation-heading-color;
+
+/*-- scss:rules --*/
+
+.reveal a {
+  line-height: 1.3em;
+}
+
+.small {
+    font-size: 0.8em
+}
+
+.Large {
+    font-size: 1.6em
+}

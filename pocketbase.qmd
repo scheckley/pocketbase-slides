@@ -1,0 +1,167 @@
+---
+title: "Pocketbase"
+author: "Stephen Checkley"
+title-slide-attributes:
+  data-background-image: ./images/background.png
+  data-background-size: fill
+  data-background-opacity: "0.5"
+format:
+  revealjs:
+    logo: ./images/logo.png
+    css: logo.css
+    footer: "RSE Skills 'n' Learn, 8th Oct 2024"
+    transition: fade
+    background-transition: fade
+    transition-speed: fast
+    theme: [default, ./kanagawa.scss]
+    highlight-style: monokai
+  html:
+    highlight-style: monokai
+---
+
+## Introduction {.smaller}
+
+- A lightweight, open-source back-end solution.
+  - <https://pocketbase.io>
+- Built in Go.
+- 1 file, small (40mb) and easy to deploy.
+  - minimal resource requirement (2 vCPU, 4GB Ram).
+  - no dependencies.
+- Integrates with popular front-end frameworks.
+  - Svelte, React, Vue, AlpineJS etc etc...
+  - HTMX + Templ + Go :)
+
+## Overview {.smaller}
+
+- Real-time database (SQLite):
+  - schema builder, data validations, real-time subscriptions REST API.
+- Authentication: 
+  - email/password and 15+ OAuth2 providers.
+- File Storage:
+  - local or S3
+- Administrator dashboard.
+- Extendable:
+  - Go and JavaScript hooks to create custom backend.
+  - Dart and Javascript SDK.
+
+## Use cases
+
+- Rapid prototyping.
+- Small/Mid scale e-Commerce or CMS platforms.
+  - SQLite still serves 10,000+ persistent realtime connections.
+  - <https://github.com/pocketbase/benchmarks>
+
+## Not use cases
+
+- SQLite - might not be suitable for large, enterprise scale solutions.
+- Pocketbase is in active development and breaking changes do happen.
+  - currently version 0.22.
+  - Only scales vertically.
+
+- Pocketbase is self-hosted only. 
+  - But Fly.io & PocketHost.io will host VM's.
+
+## Alternatives {.smaller}
+
+- Google Firebase
+  - Fully-managed "back-end as a service". Scales, but not open source.
+  - Managed Google service, Google cloud, Firestore, Realtime DB.
+  - Free tier / pay as you go.
+
+- Supabase
+  - Open-source Firebase alternative, built on PostgreSQL and Elixir
+  - Self hosted or paid hosting.
+
+both require more devops experience to deploy and maintain vs Pocketbase.
+
+## Anyways, back to Pocketbase... {.smaller}
+
+Pocketbase can be downloaded as pre-built executable.
+
+```bash
+./pocketbase serve
+```
+![instant back-end services](./images/pocketbase_serve.png)
+
+## Directory structure {.smaller}
+
+![](./images/directory_tree.png)
+
+- `pb_data` - stores your application data, uploaded files, etc. (usually should be added in .gitignore).
+- `pb_migrations` - contains JS migration files with your collection changes (can be safely committed in your repository)
+- if `pb_public` directory exists, serves the static content from it (html, css, images, etc.)
+:::
+
+## Collections {.smaller .scrollable footer='false'}
+
+- Collections represents your application data.
+- Under the hood they are plain SQLite tables that are generated automatically with the collection name and fields (aka. columns).
+
+- Single entry of a collection is called a record - i.e, a single row in the SQL table.
+
+![](./images/admin_collection.png)
+
+- Example fields:
+
+![](./images/collection_fields.png)
+- You could create collections and records from the Admin UI or the Web API.
+- Usually, collections are created from the Admin UI and records managed by the API using the client-side SDKs.
+
+## Collection types: Base, View, and Auth {.smaller .scrollable footer='false'}
+
+- Base collections
+  - Default collection type.
+    - used to store any application data (eg. articles, products, posts, etc.).
+
+  - 3 default system fields that are always available and automatically populated: 
+    - id 
+    - created 
+    - updated
+      - Only the id can be explicitly set (15 characters string).
+
+- View collections
+  - A read-only collection type where the data is populated from a plain SQL SELECT statement, allowing users to perform aggregations or any other custom queries in general.
+
+  ```sql
+  SELECT
+    posts.id,
+    posts.name,
+    count(comments.id) as totalComments
+  FROM posts
+  LEFT JOIN comments on comments.postId = posts.id
+  GROUP BY posts.id
+  ```
+
+- Auth collection
+  - everything from the Base collection but with some additional special fields to help you manage your app users providing various authentication options.
+
+    - id, created, updated, username, email, emailVisibility, verified.  
+  - You can have as many Auth collections as you want 
+    - (eg. users, managers, staffs, members, clients, etc.) 
+    - each with their own set of fields, separate login (email/username + password or OAuth2) and models managing endpoints.
+    - <https://pocketbase.io/docs/collections/>
+
+## API {.smaller .scrollable footer='false'}
+
+- API Rules are your collection access controls and data filters.
+
+- Each collection has 5 rules, corresponding to the specific API action:
+  - listRule
+  - viewRule
+  - createRule
+  - updateRule
+  - deleteRule
+
+- 3 settings:
+  - locked (default) (same as `null`)
+    - the action could be performed only by an authorized admin.
+  - empty string.
+  - anyone will be able to perform the action (admins, authorized users and guests)
+  - non-empty string.
+    - only users (authorized or not) that satisfy the rule filter expression will be able to perform this action.
+
+- PocketBase API Rules act also as records filter.
+
+## Client-side APKs
+
+![](./images/api-preview.png)
