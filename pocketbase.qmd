@@ -123,7 +123,7 @@ Pocketbase can be downloaded as pre-built executable.
       - Only the id can be explicitly set (15 characters string).
 
 - View collections
-  - A read-only collection type where the data is populated from a plain SQL SELECT statement, allowing users to perform aggregations or any other custom queries in general.
+  - A read-only collection type where the data is populated from a plain SQL SELECT statement, allowing users to perform aggregations or any other custom queries.
 
   ```sql
   SELECT
@@ -136,9 +136,10 @@ Pocketbase can be downloaded as pre-built executable.
   ```
 
 - Auth collection
-  - everything from the Base collection but with some additional special fields to help you manage your app users providing various authentication options.
+  - everything from the Base collection plus special fields to manage users and authentication.
 
     - id, created, updated, username, email, emailVisibility, verified.  
+  
   - You can have as many Auth collections as you want 
     - (eg. users, managers, staffs, members, clients, etc.) 
     - each with their own set of fields, separate login (email/username + password or OAuth2) and models managing endpoints.
@@ -146,7 +147,7 @@ Pocketbase can be downloaded as pre-built executable.
 
 ## API {.smaller .scrollable footer='false'}
 
-- API Rules are your collection access controls and data filters.
+- API Rules are collection access controls and data filters.
 
 - Each collection has 5 rules, corresponding to the specific API action:
   - listRule
@@ -181,7 +182,7 @@ Pocketbase can be downloaded as pre-built executable.
 - Admin:
 
 ```JavaScript
-mport PocketBase from 'pocketbase';
+import PocketBase from 'pocketbase';
 
 const pb = new PocketBase('http://127.0.0.1:8090');
 
@@ -291,7 +292,7 @@ const createdRecord = await pb.collection('example').create(formData);
 
 - Each uploaded file will be stored with the original filename (sanitized) and suffixed with a random (10 chars) part (eg. _test_52iWbGinWd.png_).
 
-## Deleting data
+## Deleting data {.smaller}
 
 ```Javascript
 import PocketBase from 'pocketbase';

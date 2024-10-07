@@ -554,7 +554,7 @@ Stephen Checkley
 </ul></li>
 <li>View collections
 <ul>
-<li>A read-only collection type where the data is populated from a plain SQL SELECT statement, allowing users to perform aggregations or any other custom queries in general.</li>
+<li>A read-only collection type where the data is populated from a plain SQL SELECT statement, allowing users to perform aggregations or any other custom queries.</li>
 </ul>
 <div class="sourceCode" id="cb2"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href=""></a><span class="kw">SELECT</span></span>
 <span id="cb2-2"><a href=""></a>  posts.<span class="kw">id</span>,</span>
@@ -565,10 +565,9 @@ Stephen Checkley
 <span id="cb2-7"><a href=""></a><span class="kw">GROUP</span> <span class="kw">BY</span> posts.<span class="kw">id</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
 <li>Auth collection
 <ul>
-<li><p>everything from the Base collection but with some additional special fields to help you manage your app users providing various authentication options.</p>
+<li><p>everything from the Base collection plus special fields to manage users and authentication.</p>
 <ul>
-<li>id, created, updated, username, email, emailVisibility, verified.<br>
-</li>
+<li>id, created, updated, username, email, emailVisibility, verified.</li>
 </ul></li>
 <li><p>You can have as many Auth collections as you want</p>
 <ul>
@@ -582,7 +581,7 @@ Stephen Checkley
 <section id="api" class="slide level2 smaller scrollable" data-footer="false">
 <h2>API</h2>
 <ul>
-<li><p>API Rules are your collection access controls and data filters.</p></li>
+<li><p>API Rules are collection access controls and data filters.</p></li>
 <li><p>Each collection has 5 rules, corresponding to the specific API action:</p>
 <ul>
 <li>listRule</li>
@@ -624,7 +623,7 @@ Stephen Checkley
 <ul>
 <li>Admin:</li>
 </ul>
-<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb3-1"><a href=""></a>mport PocketBase <span class="im">from</span> <span class="st">'pocketbase'</span><span class="op">;</span></span>
+<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb3-1"><a href=""></a><span class="im">import</span> PocketBase <span class="im">from</span> <span class="st">'pocketbase'</span><span class="op">;</span></span>
 <span id="cb3-2"><a href=""></a></span>
 <span id="cb3-3"><a href=""></a><span class="kw">const</span> pb <span class="op">=</span> <span class="kw">new</span> <span class="fu">PocketBase</span>(<span class="st">'http://127.0.0.1:8090'</span>)<span class="op">;</span></span>
 <span id="cb3-4"><a href=""></a></span>
@@ -726,7 +725,7 @@ Stephen Checkley
 <li>Each uploaded file will be stored with the original filename (sanitized) and suffixed with a random (10 chars) part (eg. <em>test_52iWbGinWd.png</em>).</li>
 </ul>
 </section>
-<section id="deleting-data" class="slide level2">
+<section id="deleting-data" class="slide level2 smaller">
 <h2>Deleting data</h2>
 <div class="sourceCode" id="cb7"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb7-1"><a href=""></a><span class="im">import</span> PocketBase <span class="im">from</span> <span class="st">'pocketbase'</span><span class="op">;</span></span>
 <span id="cb7-2"><a href=""></a></span>
