@@ -372,6 +372,13 @@ const url = pb.files.getUrl(record, record.myPrivateFile, {'token': fileToken});
 
 ![](./images/files-storage.png)
 
-## The obligatory example CRUD app
+## The obligatory CRUD app {.smaller .scrollable footer='false'}
 
-It's nearly lunch time!
+A crud app in 1 file :)
+
+- AlpineJS
+- Pico CSS
+- Pocketbase
+
+
+![]](./images/crud_app.png)
