@@ -172,6 +172,8 @@ Pocketbase can be downloaded as pre-built executable.
 
 - Dart
 - Javascript
+  - <https://github.com/pocketbase/js-sdk#definitions>
+  
   ![](./images/api-preview.png)
 
 ## Authentication {.smaller .scrollable footer='false'}
