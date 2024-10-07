@@ -35,6 +35,7 @@ format:
 
 - Real-time database (SQLite):
   - schema builder, data validations, real-time subscriptions REST API.
+    - via SSE (server-sent events)
 - Authentication:
   - email/password and 15+ OAuth2 providers.
 - File Storage:
