@@ -500,7 +500,7 @@ Stephen Checkley
 <img data-src="./images/directory_tree.png" class="r-stretch"><ul>
 <li><code>pb_data</code> - stores your application data, uploaded files, etc. (usually should be added in .gitignore).</li>
 <li><code>pb_migrations</code> - contains JS migration files with your collection changes (can be safely committed in your repository)</li>
-<li>if <code>pb_public</code> directory exists, serves the static content from it (html, css, images, etc.) :::</li>
+<li>if <code>pb_public</code> directory exists, serves the static content from it (html, css, images, etc.)</li>
 </ul>
 </section>
 <section id="collections" class="slide level2 smaller scrollable" data-footer="false">
@@ -592,9 +592,210 @@ Stephen Checkley
 </section>
 <section id="client-side-apks" class="slide level2">
 <h2>Client-side APKs</h2>
-
+<ul>
+<li>Dart</li>
+<li>Javascript</li>
+</ul>
 
 <img data-src="./images/api-preview.png" class="r-stretch"></section>
+<section id="authentication" class="slide level2 smaller scrollable" data-footer="false">
+<h2>Authentication</h2>
+<ul>
+<li>Authentication as admin or app user.</li>
+<li>OAuth2 integration.</li>
+</ul>
+<p><hline></hline></p>
+<ul>
+<li>Admin:</li>
+</ul>
+<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb3-1"><a href=""></a>mport PocketBase <span class="im">from</span> <span class="st">'pocketbase'</span><span class="op">;</span></span>
+<span id="cb3-2"><a href=""></a></span>
+<span id="cb3-3"><a href=""></a><span class="kw">const</span> pb <span class="op">=</span> <span class="kw">new</span> <span class="fu">PocketBase</span>(<span class="st">'http://127.0.0.1:8090'</span>)<span class="op">;</span></span>
+<span id="cb3-4"><a href=""></a></span>
+<span id="cb3-5"><a href=""></a><span class="op">...</span></span>
+<span id="cb3-6"><a href=""></a></span>
+<span id="cb3-7"><a href=""></a><span class="kw">const</span> authData <span class="op">=</span> <span class="cf">await</span> pb<span class="op">.</span><span class="at">admins</span><span class="op">.</span><span class="fu">authWithPassword</span>(<span class="st">'test@example.com'</span><span class="op">,</span> <span class="st">'1234567890'</span>)<span class="op">;</span></span>
+<span id="cb3-8"><a href=""></a></span>
+<span id="cb3-9"><a href=""></a><span class="co">// after the above you can also access the auth data from the authStore</span></span>
+<span id="cb3-10"><a href=""></a><span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(pb<span class="op">.</span><span class="at">authStore</span><span class="op">.</span><span class="at">isValid</span>)<span class="op">;</span></span>
+<span id="cb3-11"><a href=""></a><span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(pb<span class="op">.</span><span class="at">authStore</span><span class="op">.</span><span class="at">token</span>)<span class="op">;</span></span>
+<span id="cb3-12"><a href=""></a><span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(pb<span class="op">.</span><span class="at">authStore</span><span class="op">.</span><span class="at">model</span><span class="op">.</span><span class="at">id</span>)<span class="op">;</span></span>
+<span id="cb3-13"><a href=""></a></span>
+<span id="cb3-14"><a href=""></a><span class="co">// "logout" the last authenticated account</span></span>
+<span id="cb3-15"><a href=""></a>pb<span class="op">.</span><span class="at">authStore</span><span class="op">.</span><span class="fu">clear</span>()<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>App user:</li>
+</ul>
+<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb4-1"><a href=""></a><span class="im">import</span> PocketBase <span class="im">from</span> <span class="st">'pocketbase'</span><span class="op">;</span></span>
+<span id="cb4-2"><a href=""></a></span>
+<span id="cb4-3"><a href=""></a><span class="kw">const</span> pb <span class="op">=</span> <span class="kw">new</span> <span class="fu">PocketBase</span>(<span class="st">'https://pocketbase.io'</span>)<span class="op">;</span></span>
+<span id="cb4-4"><a href=""></a></span>
+<span id="cb4-5"><a href=""></a><span class="op">...</span></span>
+<span id="cb4-6"><a href=""></a></span>
+<span id="cb4-7"><a href=""></a><span class="kw">const</span> authData <span class="op">=</span> <span class="cf">await</span> pb<span class="op">.</span><span class="fu">collection</span>(<span class="st">'users'</span>)<span class="op">.</span><span class="fu">authWithPassword</span>(<span class="st">'YOUR_USERNAME_OR_EMAIL'</span><span class="op">,</span> <span class="st">'1234567890'</span>)<span class="op">;</span></span>
+<span id="cb4-8"><a href=""></a></span>
+<span id="cb4-9"><a href=""></a><span class="co">// after the above you can also access the auth data from the authStore</span></span>
+<span id="cb4-10"><a href=""></a><span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(pb<span class="op">.</span><span class="at">authStore</span><span class="op">.</span><span class="at">isValid</span>)<span class="op">;</span></span>
+<span id="cb4-11"><a href=""></a><span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(pb<span class="op">.</span><span class="at">authStore</span><span class="op">.</span><span class="at">token</span>)<span class="op">;</span></span>
+<span id="cb4-12"><a href=""></a><span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(pb<span class="op">.</span><span class="at">authStore</span><span class="op">.</span><span class="at">model</span><span class="op">.</span><span class="at">id</span>)<span class="op">;</span></span>
+<span id="cb4-13"><a href=""></a></span>
+<span id="cb4-14"><a href=""></a><span class="co">// "logout" the last authenticated model</span></span>
+<span id="cb4-15"><a href=""></a>pb<span class="op">.</span><span class="at">authStore</span><span class="op">.</span><span class="fu">clear</span>()<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>OAuth2 integration:</li>
+</ul>
+<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb5-1"><a href=""></a><span class="im">import</span> PocketBase <span class="im">from</span> <span class="st">'pocketbase'</span><span class="op">;</span></span>
+<span id="cb5-2"><a href=""></a></span>
+<span id="cb5-3"><a href=""></a><span class="kw">const</span> pb <span class="op">=</span> <span class="kw">new</span> <span class="fu">PocketBase</span>(<span class="st">'https://pocketbase.io'</span>)<span class="op">;</span></span>
+<span id="cb5-4"><a href=""></a></span>
+<span id="cb5-5"><a href=""></a><span class="op">...</span></span>
+<span id="cb5-6"><a href=""></a></span>
+<span id="cb5-7"><a href=""></a><span class="co">// This method initializes a one-off realtime subscription and will</span></span>
+<span id="cb5-8"><a href=""></a><span class="co">// open a popup window with the OAuth2 vendor page to authenticate.</span></span>
+<span id="cb5-9"><a href=""></a><span class="co">//</span></span>
+<span id="cb5-10"><a href=""></a><span class="co">// Once the external OAuth2 sign-in/sign-up flow is completed, the popup</span></span>
+<span id="cb5-11"><a href=""></a><span class="co">// window will be automatically closed and the OAuth2 data sent back</span></span>
+<span id="cb5-12"><a href=""></a><span class="co">// to the user through the previously established realtime connection.</span></span>
+<span id="cb5-13"><a href=""></a><span class="co">//</span></span>
+<span id="cb5-14"><a href=""></a><span class="co">// If the popup is being blocked on Safari, you can try the suggestion from:</span></span>
+<span id="cb5-15"><a href=""></a><span class="co">// https://github.com/pocketbase/pocketbase/discussions/2429#discussioncomment-5943061.</span></span>
+<span id="cb5-16"><a href=""></a><span class="kw">const</span> authData <span class="op">=</span> <span class="cf">await</span> pb<span class="op">.</span><span class="fu">collection</span>(<span class="st">'users'</span>)<span class="op">.</span><span class="fu">authWithOAuth2</span>({ <span class="dt">provider</span><span class="op">:</span> <span class="st">'google'</span> })<span class="op">;</span></span>
+<span id="cb5-17"><a href=""></a></span>
+<span id="cb5-18"><a href=""></a><span class="co">// after the above you can also access the auth data from the authStore</span></span>
+<span id="cb5-19"><a href=""></a><span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(pb<span class="op">.</span><span class="at">authStore</span><span class="op">.</span><span class="at">isValid</span>)<span class="op">;</span></span>
+<span id="cb5-20"><a href=""></a><span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(pb<span class="op">.</span><span class="at">authStore</span><span class="op">.</span><span class="at">token</span>)<span class="op">;</span></span>
+<span id="cb5-21"><a href=""></a><span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(pb<span class="op">.</span><span class="at">authStore</span><span class="op">.</span><span class="at">model</span><span class="op">.</span><span class="at">id</span>)<span class="op">;</span></span>
+<span id="cb5-22"><a href=""></a></span>
+<span id="cb5-23"><a href=""></a><span class="co">// "logout" the last authenticated model</span></span>
+<span id="cb5-24"><a href=""></a>pb<span class="op">.</span><span class="at">authStore</span><span class="op">.</span><span class="fu">clear</span>()<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>OAuth2 providers, as of time of writing: <img data-src="./images/providers.png"></p>
+</section>
+<section id="file-storage" class="slide level2 smaller scrollable" data-footer="false">
+<h2>File storage</h2>
+<ul>
+<li><p>Add a file field to your collection. <img data-src="./images/file-field.png"></p></li>
+<li><p>The SDK can auto-detect the request content type based on parameters.</p>
+<ul>
+<li>E.g create a new Record and upload multiple files to the example file field <em>“documents”</em>:</li>
+</ul></li>
+</ul>
+<div class="sourceCode" id="cb6"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb6-1"><a href=""></a><span class="co">// Example HTML:</span></span>
+<span id="cb6-2"><a href=""></a><span class="co">// &lt;input type="file" id="fileInput" /&gt;</span></span>
+<span id="cb6-3"><a href=""></a></span>
+<span id="cb6-4"><a href=""></a><span class="im">import</span> PocketBase <span class="im">from</span> <span class="st">'pocketbase'</span><span class="op">;</span></span>
+<span id="cb6-5"><a href=""></a></span>
+<span id="cb6-6"><a href=""></a><span class="kw">const</span> pb <span class="op">=</span> <span class="kw">new</span> <span class="fu">PocketBase</span>(<span class="st">'http://127.0.0.1:8090'</span>)<span class="op">;</span></span>
+<span id="cb6-7"><a href=""></a></span>
+<span id="cb6-8"><a href=""></a><span class="op">...</span></span>
+<span id="cb6-9"><a href=""></a></span>
+<span id="cb6-10"><a href=""></a><span class="kw">const</span> formData <span class="op">=</span> <span class="kw">new</span> <span class="bu">FormData</span>()<span class="op">;</span></span>
+<span id="cb6-11"><a href=""></a></span>
+<span id="cb6-12"><a href=""></a><span class="kw">const</span> fileInput <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">getElementById</span>(<span class="st">'fileInput'</span>)<span class="op">;</span></span>
+<span id="cb6-13"><a href=""></a></span>
+<span id="cb6-14"><a href=""></a><span class="co">// listen to file input changes and add the selected files to the form data</span></span>
+<span id="cb6-15"><a href=""></a>fileInput<span class="op">.</span><span class="fu">addEventListener</span>(<span class="st">'change'</span><span class="op">,</span> <span class="kw">function</span> () {</span>
+<span id="cb6-16"><a href=""></a>    <span class="cf">for</span> (<span class="kw">let</span> file <span class="kw">of</span> fileInput<span class="op">.</span><span class="at">files</span>) {</span>
+<span id="cb6-17"><a href=""></a>        formData<span class="op">.</span><span class="fu">append</span>(<span class="st">'documents'</span><span class="op">,</span> file)<span class="op">;</span></span>
+<span id="cb6-18"><a href=""></a>    }</span>
+<span id="cb6-19"><a href=""></a>})<span class="op">;</span></span>
+<span id="cb6-20"><a href=""></a></span>
+<span id="cb6-21"><a href=""></a><span class="co">// set some other regular text field value</span></span>
+<span id="cb6-22"><a href=""></a>formData<span class="op">.</span><span class="fu">append</span>(<span class="st">'title'</span><span class="op">,</span> <span class="st">'Hello world!'</span>)<span class="op">;</span></span>
+<span id="cb6-23"><a href=""></a></span>
+<span id="cb6-24"><a href=""></a><span class="op">...</span></span>
+<span id="cb6-25"><a href=""></a></span>
+<span id="cb6-26"><a href=""></a><span class="co">// upload and create new record</span></span>
+<span id="cb6-27"><a href=""></a><span class="kw">const</span> createdRecord <span class="op">=</span> <span class="cf">await</span> pb<span class="op">.</span><span class="fu">collection</span>(<span class="st">'example'</span>)<span class="op">.</span><span class="fu">create</span>(formData)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>Each uploaded file will be stored with the original filename (sanitized) and suffixed with a random (10 chars) part (eg. <em>test_52iWbGinWd.png</em>).</li>
+</ul>
+</section>
+<section id="deleting-data" class="slide level2">
+<h2>Deleting data</h2>
+<div class="sourceCode" id="cb7"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb7-1"><a href=""></a><span class="im">import</span> PocketBase <span class="im">from</span> <span class="st">'pocketbase'</span><span class="op">;</span></span>
+<span id="cb7-2"><a href=""></a></span>
+<span id="cb7-3"><a href=""></a><span class="kw">const</span> pb <span class="op">=</span> <span class="kw">new</span> <span class="fu">PocketBase</span>(<span class="st">'http://127.0.0.1:8090'</span>)<span class="op">;</span></span>
+<span id="cb7-4"><a href=""></a></span>
+<span id="cb7-5"><a href=""></a><span class="op">...</span></span>
+<span id="cb7-6"><a href=""></a></span>
+<span id="cb7-7"><a href=""></a><span class="co">// delete all "documents" files</span></span>
+<span id="cb7-8"><a href=""></a><span class="cf">await</span> pb<span class="op">.</span><span class="fu">collection</span>(<span class="st">'example'</span>)<span class="op">.</span><span class="fu">update</span>(<span class="st">'RECORD_ID'</span><span class="op">,</span> {</span>
+<span id="cb7-9"><a href=""></a>    <span class="st">'documents'</span><span class="op">:</span> <span class="kw">null</span><span class="op">,</span></span>
+<span id="cb7-10"><a href=""></a>})<span class="op">;</span></span>
+<span id="cb7-11"><a href=""></a></span>
+<span id="cb7-12"><a href=""></a><span class="co">// delete individual files</span></span>
+<span id="cb7-13"><a href=""></a><span class="cf">await</span> pb<span class="op">.</span><span class="fu">collection</span>(<span class="st">'example'</span>)<span class="op">.</span><span class="fu">update</span>(<span class="st">'RECORD_ID'</span><span class="op">,</span> {</span>
+<span id="cb7-14"><a href=""></a>    <span class="st">'documents-'</span><span class="op">:</span> [<span class="st">"file1.pdf"</span><span class="op">,</span> <span class="st">"file2.txt"</span>]<span class="op">,</span></span>
+<span id="cb7-15"><a href=""></a>})<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="file-url" class="slide level2 smaller scrollable" data-footer="false">
+<h2>File URL</h2>
+<ul>
+<li>Each uploaded file can be accessed by requesting its file url:</li>
+</ul>
+<p><code>http://127.0.0.1:8090/api/files/COLLECTION_ID_OR_NAME/RECORD_ID/FILENAME</code></p>
+<ul>
+<li>If you already have a Record model instance, the SDKs provide a convenient method to generate a file url by its name.</li>
+</ul>
+<div class="sourceCode" id="cb8"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb8-1"><a href=""></a><span class="im">import</span> PocketBase <span class="im">from</span> <span class="st">'pocketbase'</span><span class="op">;</span></span>
+<span id="cb8-2"><a href=""></a></span>
+<span id="cb8-3"><a href=""></a><span class="kw">const</span> pb <span class="op">=</span> <span class="kw">new</span> <span class="fu">PocketBase</span>(<span class="st">'http://127.0.0.1:8090'</span>)<span class="op">;</span></span>
+<span id="cb8-4"><a href=""></a></span>
+<span id="cb8-5"><a href=""></a><span class="op">...</span></span>
+<span id="cb8-6"><a href=""></a></span>
+<span id="cb8-7"><a href=""></a><span class="kw">const</span> record <span class="op">=</span> <span class="cf">await</span> pb<span class="op">.</span><span class="fu">collection</span>(<span class="st">'example'</span>)<span class="op">.</span><span class="fu">getOne</span>(<span class="st">'RECORD_ID'</span>)<span class="op">;</span></span>
+<span id="cb8-8"><a href=""></a></span>
+<span id="cb8-9"><a href=""></a><span class="co">// get only the first filename from "documents"</span></span>
+<span id="cb8-10"><a href=""></a><span class="co">//</span></span>
+<span id="cb8-11"><a href=""></a><span class="co">// note:</span></span>
+<span id="cb8-12"><a href=""></a><span class="co">// "documents" is an array of filenames because</span></span>
+<span id="cb8-13"><a href=""></a><span class="co">// the "documents" field was created with "Max Files" option &gt; 1;</span></span>
+<span id="cb8-14"><a href=""></a><span class="co">// if "Max Files" was 1, then the result property would be just a string</span></span>
+<span id="cb8-15"><a href=""></a><span class="kw">const</span> firstFilename <span class="op">=</span> record<span class="op">.</span><span class="at">documents</span>[<span class="dv">0</span>]<span class="op">;</span></span>
+<span id="cb8-16"><a href=""></a></span>
+<span id="cb8-17"><a href=""></a><span class="co">// returns something like:</span></span>
+<span id="cb8-18"><a href=""></a><span class="co">// http://127.0.0.1:8090/api/files/example/kfzjt5oy8r34hvn/test_52iWbGinWd.png?thumb=100x250</span></span>
+<span id="cb8-19"><a href=""></a><span class="kw">const</span> url <span class="op">=</span> pb<span class="op">.</span><span class="at">files</span><span class="op">.</span><span class="fu">getUrl</span>(record<span class="op">,</span> firstFilename<span class="op">,</span> {<span class="st">'thumb'</span><span class="op">:</span> <span class="st">'100x250'</span>})<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="protected-files" class="slide level2 smaller scrollable" data-footer="false">
+<h2>Protected files</h2>
+<ul>
+<li><p>By default all files are public accessible if you know their full url.</p></li>
+<li><p>You can mark the file field as Protected and then request the file with a special short-lived file token.</p></li>
+</ul>
+
+<img data-src="./images/file-options.png" class="r-stretch"><div class="sourceCode" id="cb9"><pre class="sourceCode numberSource javascript number-lines code-with-copy"><code class="sourceCode javascript"><span id="cb9-1"><a href=""></a><span class="im">import</span> PocketBase <span class="im">from</span> <span class="st">'pocketbase'</span><span class="op">;</span></span>
+<span id="cb9-2"><a href=""></a></span>
+<span id="cb9-3"><a href=""></a><span class="kw">const</span> pb <span class="op">=</span> <span class="kw">new</span> <span class="fu">PocketBase</span>(<span class="st">'http://127.0.0.1:8090'</span>)<span class="op">;</span></span>
+<span id="cb9-4"><a href=""></a></span>
+<span id="cb9-5"><a href=""></a><span class="op">...</span></span>
+<span id="cb9-6"><a href=""></a></span>
+<span id="cb9-7"><a href=""></a><span class="co">// authenticate</span></span>
+<span id="cb9-8"><a href=""></a><span class="cf">await</span> pb<span class="op">.</span><span class="fu">collection</span>(<span class="st">'users'</span>)<span class="op">.</span><span class="fu">authWithPassword</span>(<span class="st">'test@example.com'</span><span class="op">,</span> <span class="st">'1234567890'</span>)<span class="op">;</span></span>
+<span id="cb9-9"><a href=""></a></span>
+<span id="cb9-10"><a href=""></a><span class="co">// generate a file token</span></span>
+<span id="cb9-11"><a href=""></a><span class="kw">const</span> fileToken <span class="op">=</span> <span class="cf">await</span> pb<span class="op">.</span><span class="at">files</span><span class="op">.</span><span class="fu">getToken</span>()<span class="op">;</span></span>
+<span id="cb9-12"><a href=""></a></span>
+<span id="cb9-13"><a href=""></a><span class="co">// retrieve an example protected file url (will be valid ~2min)</span></span>
+<span id="cb9-14"><a href=""></a><span class="kw">const</span> record <span class="op">=</span> <span class="cf">await</span> pb<span class="op">.</span><span class="fu">collection</span>(<span class="st">'example'</span>)<span class="op">.</span><span class="fu">getOne</span>(<span class="st">'RECORD_ID'</span>)<span class="op">;</span></span>
+<span id="cb9-15"><a href=""></a><span class="kw">const</span> url <span class="op">=</span> pb<span class="op">.</span><span class="at">files</span><span class="op">.</span><span class="fu">getUrl</span>(record<span class="op">,</span> record<span class="op">.</span><span class="at">myPrivateFile</span><span class="op">,</span> {<span class="st">'token'</span><span class="op">:</span> fileToken})<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="file-storage-1" class="slide level2 smaller scrollable" data-footer="false">
+<h2>File storage</h2>
+<ul>
+<li><p>By default PocketBase uses the local file system to store uploaded files (in the <code>pb_data/storage directory</code>).</p></li>
+<li><p>Also S3 compatible storage</p>
+<ul>
+<li>(AWS S3, MinIO, Wasabi, DigitalOcean Spaces, Vultr Object Storage, etc.).</li>
+</ul></li>
+</ul>
+
+<img data-src="./images/files-storage.png" class="r-stretch"></section>
+<section id="the-obligatory-example-crud-app" class="slide level2">
+<h2>The obligatory example CRUD app</h2>
+<p>It’s nearly lunch time!</p>
+
+</section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <p><img src="./images/logo.png" class="slide-logo"></p>
