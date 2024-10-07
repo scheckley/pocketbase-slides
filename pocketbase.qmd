@@ -378,6 +378,6 @@ A crud app in 1 file :)
 
 - AlpineJS
 - Pico CSS
-- BoxIcons
+- Boxicons
 
 [![](./images/crud_app.png)](http://127.0.0.1:8090)
