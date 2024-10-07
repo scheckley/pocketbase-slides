@@ -35,7 +35,7 @@ format:
 
 - Real-time database (SQLite):
   - schema builder, data validations, real-time subscriptions REST API.
-- Authentication: 
+- Authentication:
   - email/password and 15+ OAuth2 providers.
 - File Storage:
   - local or S3
@@ -58,7 +58,7 @@ format:
   - currently version 0.22.
   - Only scales vertically.
 
-- Pocketbase is self-hosted only. 
+- Pocketbase is self-hosted only.
   - But Fly.io & PocketHost.io will host VM's.
 
 ## Alternatives {.smaller}
@@ -81,6 +81,7 @@ Pocketbase can be downloaded as pre-built executable.
 ```bash
 ./pocketbase serve
 ```
+
 ![instant back-end services](./images/pocketbase_serve.png)
 
 ![Administator panel](./images/admin_screen.png)
@@ -107,6 +108,7 @@ Pocketbase can be downloaded as pre-built executable.
 - Example fields:
 
 ![](./images/collection_fields.png)
+
 - You could create collections and records from the Admin UI or the Web API.
 - Usually, collections are created from the Admin UI and records managed by the API using the client-side SDKs.
 
@@ -116,9 +118,9 @@ Pocketbase can be downloaded as pre-built executable.
   - Default collection type.
     - used to store any application data (eg. articles, products, posts, etc.).
 
-  - 3 default system fields that are always available and automatically populated: 
-    - id 
-    - created 
+  - 3 default system fields that are always available and automatically populated:
+    - id
+    - created
     - updated
       - Only the id can be explicitly set (15 characters string).
 
@@ -138,10 +140,10 @@ Pocketbase can be downloaded as pre-built executable.
 - Auth collection
   - everything from the Base collection plus special fields to manage users and authentication.
 
-    - id, created, updated, username, email, emailVisibility, verified.  
-  
-  - You can have as many Auth collections as you want 
-    - (eg. users, managers, staffs, members, clients, etc.) 
+    - id, created, updated, username, email, emailVisibility, verified.
+
+  - You can have as many Auth collections as you want
+    - (eg. users, managers, staffs, members, clients, etc.)
     - each with their own set of fields, separate login (email/username + password or OAuth2) and models managing endpoints.
     - <https://pocketbase.io/docs/collections/>
 
@@ -166,14 +168,14 @@ Pocketbase can be downloaded as pre-built executable.
 
 - PocketBase API Rules act also as records filter.
 
-
 ## Client-side APKs {.smaller .scrollable footer='false'}
 
 - Dart
 - Javascript
-![](./images/api-preview.png)
+  ![](./images/api-preview.png)
 
 ## Authentication {.smaller .scrollable footer='false'}
+
 - Authentication as admin or app user.
 - OAuth2 integration.
 
@@ -251,11 +253,10 @@ pb.authStore.clear();
 OAuth2 providers, as of time of writing:
 ![](./images/providers.png)
 
-
 ## File storage {.smaller .scrollable footer='false'}
 
 - Add a file field to your collection.
-![](./images/file-field.png)
+  ![](./images/file-field.png)
 
 - The SDK can auto-detect the request content type based on parameters.
   - E.g create a new Record and upload multiple files to the example file field _"documents"_:
@@ -316,7 +317,7 @@ await pb.collection('example').update('RECORD_ID', {
 
 - Each uploaded file can be accessed by requesting its file url:
 
-```http://127.0.0.1:8090/api/files/COLLECTION_ID_OR_NAME/RECORD_ID/FILENAME``` 
+`http://127.0.0.1:8090/api/files/COLLECTION_ID_OR_NAME/RECORD_ID/FILENAME`
 
 - If you already have a Record model instance, the SDKs provide a convenient method to generate a file url by its name.
 
@@ -370,9 +371,9 @@ const url = pb.files.getUrl(record, record.myPrivateFile, {'token': fileToken});
 
 ## File storage {.smaller .scrollable footer='false'}
 
-- By default PocketBase uses the local file system to store uploaded files (in the ```pb_data/storage directory```).
+- By default PocketBase uses the local file system to store uploaded files (in the `pb_data/storage directory`).
 
-- Also S3 compatible storage 
+- Also S3 compatible storage
   - (AWS S3, MinIO, Wasabi, DigitalOcean Spaces, Vultr Object Storage, etc.).
 
 ![](./images/files-storage.png)
