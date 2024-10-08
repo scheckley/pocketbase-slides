@@ -16,7 +16,10 @@ format:
     theme: [default, ./kanagawa.scss]
     highlight-style: monokai
   html:
+    theme: [default, ./kanagawa.scss]
+    css: logo.css
     highlight-style: monokai
+    embed-resources: true
 ---
 
 ## Introduction {.smaller}
